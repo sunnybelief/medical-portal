@@ -1,0 +1,582 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <div class="page-title">评估方案</div>
+
+  <div class="query-condition-container">
+    <form class="form-horizontal form-container">
+
+      <div class="form-group form-item">
+        <div class="col-md-4">
+          <label class="label-title control-label col-md-3">方案名称:</label>
+          <div class="input-content col-md-9">
+            <input type="text" class="form-control" id="J_scheme" placeholder="输入方案名称以查询">
+          </div>
+        </div>
+
+        <div class="accident-select-container col-md-8">
+          <label class="label-title control-label col-md-2">是否已抽样:</label>
+          <div class="input-content col-md-10">
+            <label class="radio-inline">
+              <input type="radio" name="hasSampling" value="ALL" checked> 全部
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="hasSampling" value="已抽样"> 是
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="hasSampling" value="未抽样"> 否
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-item">
+        <div class="col-md-4">
+          <label class="label-title control-label col-md-3">器械类别:</label>
+          <div class="input-content col-md-9">
+            <select class="form-control equipment-category-select">
+              <option value="ALL">全部</option>
+              <option value="数字减影血管造影机">数字减影血管造影机</option>
+              <option value="纳米银抗菌凝胶">纳米银抗菌凝胶</option>
+              <option value="XXXXXXXXXXX机1">XXXXXXXXXXX机</option>
+              <option value="XXXXXXXXXXX机2">XXXXXXXXXXX机</option>
+              <option value="XXXXXXXXXXX机3">XXXXXXXXXXX机</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-button-operate col-md-8">
+          <label class="label-title control-label col-md-1"></label>
+          <div class="input-content">
+            <button class="btn blue-button submit-button">查&emsp;&emsp;询</button>
+            <button class="btn org-button reset-button">重&emsp;&emsp;置</button>
+            <button class="btn red-button add-button">新增方案</button>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+  <table class="table table-bordered scheme-container">
+    <thead>
+    <tr>
+      <th>方案名称</th>
+      <th>制定日期</th>
+      <th>器械类别</th>
+      <th>总分值</th>
+      <th>制定人</th>
+      <th>抽样人</th>
+      <th>抽样状态</th>
+      <th>评估状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="scheme-tbody">
+
+    </tbody>
+  </table>
+
+  <div class="pagination-container">
+
+  </div>
+</div>
+
+
+<!--列表模板-->
+{{%
+<script type="text/x-template" id="J_scheme_tr_template">
+  {{#each(schemeList)}}
+  <tr class="" data-name="{{name}}" data-id="{{id}}" data-equipmentcategory="{{equipmentCategory}}">
+    <td>{{name}}</td>
+    <td>{{formatDate(gmtCreated)}}</td>
+    <td>{{equipmentCategory}}</td>
+    <td>{{totalGrade}}</td>
+    <td>{{schemeMaker}}</td>
+    {{#if(samplingMaker)}}
+    <td>{{samplingMaker}}</td>
+    {{else}}
+    <td class="empty-td"> /</td>
+    {{/if}}
+    <td>{{samplingStatus}}</td>
+    <td>{{evaluateStatus}}</td>
+    <td>
+      <a class="td-href scheme-look-href">查看</a>
+      <a class="td-href scheme-delete-href">删除</a>
+      {{#if(samplingStatus==='已抽样')}}
+      <a class="td-href scheme-evaluate-href">进入</a>
+      {{else}}
+      <a class="td-href scheme-sampling-href">抽样</a>
+      {{/if}}
+    </td>
+  </tr>
+  {{/each}}
+</script>
+%}}
+
+<!--分页器模板-->
+{{%
+<script type="text/x-template" id="J_scheme_pagination_template">
+  <ul class="pagination">
+    <li class="pagination-left"><a href="#" class="pagination-left-href">&laquo;</a></li>
+    {{#each(paginationList)}}
+    <li class="pagination-item {{#if(this===currentPage)}}active{{/if}}"><a href="#" class="pagination-item-href">{{this}}</a>
+    </li>
+    {{/each}}
+    <li class="pagination-right"><a href="#" class="pagination-right-href">&raquo;</a></li>
+  </ul>
+</script>
+%}}
+
+
+<!--新增评估方案弹窗-模板-->
+<div class="scheme-add-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_scheme_add_template">
+  <div class="modal fade" id="J_scheme_add_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          新增评估方案
+        </div>
+        <div class="modal-body">
+          <div class="scheme-look-data">
+            <div class="scheme-look-title">基本信息</div>
+            <form class="form-horizontal form-container form-modify-modal">
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title"><span class="red-star">*</span>方案名称:</label>
+                <div class="col-md-10 input-content">
+                  <input class="form-control font-12" id="J_add_scheme_name" placeholder="">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title"><span class="red-star">*</span>器械类别:</label>
+                <div class="col-md-10 input-content">
+                  <select class="form-control add-equipment-category-select font-12">
+                    <option value="数字减影血管造影机">数字减影血管造影机</option>
+                    <option value="纳米银抗菌凝胶">纳米银抗菌凝胶</option>
+                    <option value="XXXXXXXXXXX机1">XXXXXXXXXXX机</option>
+                    <option value="XXXXXXXXXXX机2">XXXXXXXXXXX机</option>
+                    <option value="XXXXXXXXXXX机3">XXXXXXXXXXX机</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title"><span class="red-star">*</span>方案说明:</label>
+                <div class="col-md-10 input-content">
+                  <input type="email" class="form-control font-12" id="J_add_scheme_info" placeholder="">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title"><span class="red-star">*</span> 总分值:</label>
+                <div class="col-md-10 input-content">
+                  <input class="form-control font-12" id="J_add_scheme_total_grade" placeholder="自动汇总"
+                         disabled="disabled">
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+
+          <table class="table table-bordered add-scheme-container">
+            <thead>
+            <tr class="scheme-tr">
+              <th style="width:25%">评分项名称</th>
+              <th style="width:10%">分值</th>
+              <th style="width:55%">评分说明</th>
+              <th style="width:10%">操作</th>
+            </tr>
+            </thead>
+            <tbody class="scheme-add-tbody">
+            <tr class="scheme-tr">
+              <td><input type="text" class=" add-table-scheme-name" placeholder=""></td>
+              <td><input type="text" class=" add-table-scheme-grade" placeholder=""
+                         onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
+                         onblur="autoModifyTotalGrade(this)"></td>
+              <td><input type="text" class=" add-table-scheme-info" placeholder=""></td>
+              <td>
+                <span class="scheme-add-button glyphicon glyphicon-plus" onclick="onAddTR(this)"></span>
+                <span class="scheme-min-button glyphicon glyphicon-minus" onclick="onMinTR(this)"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button class="btn blue-button save-add-scheme-button">保&emsp;&emsp;存</button>
+          <button class="btn org-button cancel-button">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+
+<!--查看评估方案弹窗-模板-->
+<div class="scheme-look-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_scheme_look_template">
+  <div class="modal fade" id="J_scheme_look_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          查看评估方案
+        </div>
+        <div class="modal-body">
+          <div class="scheme-look-data">
+            <div class="scheme-look-title">基本信息</div>
+            <form class="form-horizontal form-container form-modify-modal">
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title font-12">方案名称:</label>
+                <div class="col-md-10 input-content">
+                  <input class="form-control font-12 scheme-look-modal-name" value="{{name}}"
+                         disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title font-12">方案说明:</label>
+                <div class="col-md-10 input-content">
+                  <input class="form-control font-12 scheme-look-modal-info" value="{{extraInfo}}"
+                         disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <div class="col-md-4">
+                  <label class="label-title control-label col-md-3 short-label-title font-12">器械类别:</label>
+                  <div class="input-content col-md-9">
+                    <select class="form-control look-modal-equipment-category font-12" disabled="disabled">
+                      <option value="{{equipmentCategory}}">{{equipmentCategory}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label class="label-title control-label col-md-4 short-label-title font-12">制定人:</label>
+                  <div class="input-content col-md-7  ">
+                    <input class="form-control font-12 scheme-look-modal-maker" value="{{schemeMaker}}"
+                           disabled="disabled">
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <label class="label-title control-label col-md-2 short-label-title font-12">总分值:</label>
+                  <div class="input-content col-md-3  ">
+                    <input class="form-control font-12 scheme-look-modal-totalGrade" value="{{totalGrade}}"
+                           disabled="disabled">
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          {{#if(samplingStatus==='已抽样')}}
+          <div class="scheme-look-data">
+            <div class="scheme-look-title">抽样规则</div>
+            <form class="form-horizontal form-container form-modify-modal">
+
+              <div class="form-group form-item">
+                <div class="col-md-3">
+                  <label class="label-title control-label col-md-5 short-label-title1 font-12">抽样人:</label>
+                  <div class="input-content col-md-7">
+                    <input class="form-control font-12 sampling-look-modal-maker" value="{{samplingMaker}}"
+                           disabled="disabled">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label class="label-title control-label col-md-4 short-label-title2 font-12">样本总数:</label>
+                  <div class="input-content col-md-7  ">
+                    <input class="form-control font-12 sampling-look-modal-total" value="{{sampleCount}}"
+                           disabled="disabled">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="label-title control-label col-md-4 short-label-title3 font-12">样本报告时间范围:</label>
+                  <div class="input-content col-md-7  ">
+                    <input class="form-control font-12 sampling-look-modal-during" value="{{sampleRangeDuring}}"
+                           disabled="disabled">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title font-12">监测机构:</label>
+                <div class="col-md-10 input-content">
+
+                  <input class="form-control font-12 sample-look-modal-org" value="{{sampleRangeOrgName}}"
+                         disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-1 control-label label-title font-12">不良事件:</label>
+                {{#if(sampleRangeHarmOrNot==='ALL')}}
+                <div class="col-md-10 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="ALL" checked> 全部
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="Y" disabled="disabled"> 发生了
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="N" disabled="disabled"> 未发生
+                  </label>
+                </div>
+                {{elseif(sampleRangeHarmOrNot==='Y')}}
+                <div class="col-md-10 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="ALL" disabled="disabled"> 全部
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="Y" checked> 发生了
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="N" disabled="disabled"> 未发生
+                  </label>
+                </div>
+                {{else}}
+                <div class="col-md-10 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="ALL" disabled="disabled"> 全部
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="Y" disabled="disabled"> 发生了
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sampleHasAccident" value="N" checked> 未发生
+                  </label>
+                </div>
+                {{/if}}
+              </div>
+
+            </form>
+          </div>
+          {{/if}}
+
+          <table class="table table-bordered look-scheme-container">
+            <thead>
+            <tr class="">
+              <th style="">评分项名称</th>
+              <th style="">分值</th>
+              <th style="">评分说明</th>
+            </tr>
+            </thead>
+            <tbody class="look-scheme-tbody">
+            {{#each(ruleGradeJSON)}}
+            <tr class="">
+              <td>{{itemName}}</td>
+              <td>{{itemRuleGrade}}</td>
+              <td>{{itemInfo}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button class="btn blue-button look-cancel-scheme-button">关&emsp;&emsp;闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+
+<!--删除指定的某条评估方案-弹窗模板-->
+<div class="delete-one-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_delete_one_template">
+  <div class="modal fade" id="J_delete_one_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog delete-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header delete-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4>请确认操作</h4>
+        </div>
+        <div class="modal-body delete-modal-body">
+          删除后不可找回，是否确定删除该评估方案！
+        </div>
+        <div class="modal-footer delete-modal-footer">
+          <button type="button" class="btn btn-primary blue-button delete-ok-button">确&emsp;&emsp;定
+          </button>
+          <button type="button" class="btn btn-default org-button" data-dismiss="modal">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+
+<!--抽样弹窗-模板-->
+<div class="sample-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_sample_modal_template">
+  <div class="modal fade" id="J_sample_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog sample-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          执行抽样
+        </div>
+        <div class="modal-body">
+          <div class="scheme-look-data">
+            <div class="scheme-look-title">抽样规则</div>
+            <form class="form-horizontal form-container form-modify-modal">
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>方案名称:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control font-12" value="{{name}}" disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>监测机构:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control font-12" id="J_org" placeholder="">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title">报告日期:</label>
+                <div class="col-md-9 input-content">
+                  <input class="date-input " id="J_begin_date" placeholder="年/月/日"> &emsp;至&emsp;
+                  <input class="date-input " id="J_end_date" placeholder="年/月/日">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>不良事件:</label>
+                <div class="col-md-9 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="ruleHasAccident" value="ALL" checked> 全部
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="ruleHasAccident" value="Y"> 发生了
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="ruleHasAccident" value="N"> 未发生
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>样本数范围:</label>
+                <div class="col-md-9 input-content">
+                  <input class="count-input font-12" id="J_sample_rule_count_min"
+                         onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
+                         placeholder="最小数目"> &emsp;至&emsp;
+                  <input class="count-input font-12" id="J_sample_rule_count_max"
+                         onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)"
+                         placeholder="最大数目">
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button class="btn blue-button do-sample-button"
+                  data-schemeid="{{schemeId}}" data-equipmentcategory="{{equipmentCategory}}">执行抽样
+          </button>
+          <button class="btn org-button sample-cancel-button" data-dismiss="modal">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/qualitySearchManagement.js"></script>
+<script type="text/javascript">
+  function isNull(data) {
+    return (data === "" || data === undefined || data === null) ? true : false;
+  }
+
+  //自动加总总分
+  function autoModifyTotalGrade(obj) {
+    let currentTotal = 0;
+    let $trs = $(obj).parent().parent().parent().find('tr .add-table-scheme-grade');
+    $trs.each(function (index, element) {
+      var item = $(this).val();
+      if (isNull(item)) {
+        item = 0;
+      }
+      currentTotal = currentTotal + parseInt(item);
+    });
+    $('#J_add_scheme_total_grade').val(currentTotal);
+  }
+
+  //添加一行
+  function onAddTR(obj) {
+    //如果最后一行没有填写完整，那么不允许添加下一行
+    var $lastTr = $(obj).parent().parent().parent().parent().find('tr:last');
+    var schemeName = $lastTr.find('.add-table-scheme-name').val();
+    var schemeGrade = $lastTr.find('.add-table-scheme-grade').val();
+    var schemeInfo = $lastTr.find('.add-table-scheme-info').val();
+
+    if (isNull(schemeName) || isNull(schemeGrade) || isNull(schemeInfo)) {
+      alert('请将现有行填写完毕，再添加新行');
+      return;
+    } else {
+      $(obj).parent().parent().after('<tr class="scheme-tr">' +
+        '<td><input type="text" class=" add-table-scheme-name" placeholder=""></td>' +
+        '<td><input type="text" class=" add-table-scheme-grade" placeholder=""' +
+        'onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9]+/,' +
+        "'');}).call(this)" +
+        '" onblur="autoModifyTotalGrade(this)"></td>' +
+        '<td><input type="text" class=" add-table-scheme-info" placeholder=""></td>' +
+        '<td> <span class="scheme-add-button glyphicon glyphicon-plus" onclick="onAddTR(this)"></span>' +
+        '<span class="scheme-min-button glyphicon glyphicon-minus" onclick="onMinTR(this)"></span> </td></tr>');
+    }
+
+  }
+
+  //减少一行
+  function onMinTR(obj) {
+    //只有大于一行的时候，才能够删除当前行
+    if ($(obj).parent().parent().parent().find('tr').length > 1) {
+      $(obj).parent().parent().remove();
+    } else {
+      alert('请至少添加一项');
+    }
+  }
+</script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/qualitySearchManagement.css"/>
+{{/block}}
+

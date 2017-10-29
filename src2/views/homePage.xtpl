@@ -1,0 +1,158 @@
+{{extend('./layout')}}
+{{#block('content')}}
+
+<div class="">
+  <!--公告栏-->
+  <div id="J_notice_container" class="col-md-7">
+
+    <div class="notice-title-container">
+      <div class="news-title">
+        公告通知
+      </div>
+
+      <div class="news-more">
+        <a href="#">
+          <span class="new-more-text">更多</span>
+          <img class="more-icon" src="/image/more.png"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="notice-data-container">
+      <ul>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+        <li class="dt_li"><span class="riqi">[2017-09-15]</span>
+          <a href="#" class="notice-line-a">关于制定医疗任职资格人员情况的公示办法</a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+
+  <!--辽宁地图-->
+  <div id="c1" class="col-md-5"></div>
+</div>
+
+<!--不良事件发生率-->
+<div class="bad-percent-container  ">
+  <div class="bad-title">
+    <span class="title-main">不良事件发生率</span>
+    <span class="title-dec">[截至当前]</span>
+  </div>
+
+  <div class="real-data-container">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>医疗器械类别</th>
+        <th>重点监测观察表（份）</th>
+        <th>不良事件报告表（份）</th>
+        <th>不良事件发生率</th>
+      </tr>
+      </thead>
+      <tbody class="data-tbody">
+      <tr class="data-tr">
+        <td>数字减影血管造影机</td>
+        <td>89283</td>
+        <td>23</td>
+        <td>10%</td>
+      </tr>
+      <tr class="data-tr">
+        <td>数字减影血管造影机</td>
+        <td>89283</td>
+        <td>23</td>
+        <td>10%</td>
+      </tr>
+      <tr class="data-tr">
+        <td>数字减影血管造影机</td>
+        <td>89283</td>
+        <td>23</td>
+        <td>10%</td>
+      </tr>
+      <tr class="data-tr">
+        <td>数字减影血管造影机</td>
+        <td>89283</td>
+        <td>23</td>
+        <td>10%</td>
+      </tr>
+      <tr class="data-tr">
+        <td>数字减影血管造影机</td>
+        <td>89283</td>
+        <td>23</td>
+        <td>10%</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!--日常待办事项-->
+<div class="block-container  ">
+  <div class="bad-title">
+    <span class="title-main">日常待办项</span>
+  </div>
+
+  <div class="block-container">
+    <div class="block-item">
+      <img class="block-img" src="/image/block_1.png"/>
+      <div>填写报告</div>
+    </div>
+    <div class="block-item">
+      <img class="block-img" src="/image/block_2.png"/>
+      <div>暂存的报告</div>
+    </div>
+    <div class="block-item">
+      <img class="block-img" src="/image/block_3.png"/>
+      <div>被退回的报告</div>
+    </div>
+    <div class="block-item">
+      <img class="block-img" src="/image/block_4.png"/>
+      <div>待我评价的报告</div>
+    </div>
+    <div class="block-item">
+      <img class="block-img" src="/image/block_5.png"/>
+      <div>质量评估抽检</div>
+    </div>
+
+  </div>
+</div>
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/global-js/g2.js"></script>
+<script src="/global-js/g2china.js"></script>
+<script src="/homePage.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/homePage.css"/>
+{{/block}}
+

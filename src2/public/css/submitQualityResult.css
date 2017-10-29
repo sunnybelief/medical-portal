@@ -1,0 +1,26 @@
+.body-implement {
+  text-align: center;
+}
+
+img.success-img {
+  width: 70px;
+}
+
+.h4, h4 {
+  font-size: 18px;
+  color: #3459a3;
+  font-weight: 900;
+}
+
+.continue-post {
+  width: 300px;
+  margin-left: 2px !important;
+  margin-top: 10px;
+  height: 37px;
+}
+
+.look-report {
+  margin-top: 10px;
+  width: 300px;
+  height: 35px;
+}

@@ -1,0 +1,24 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <img class="success-img" src="/image/right.png"/>
+  {{#if(submitType==='已评价')}}
+  <h4>评价提交成功，报告编号：#{{observeId}}</h4>
+  {{else}}
+  <h4>报告已被退回，报告编号：#{{observeId}}</h4>
+  {{/if}}
+  <button class="btn blue-button continue-post">继续进行评价</button>
+  <br/>
+  <button class="btn org-button look-report">返回首页</button>
+
+</div>
+{{/block}}
+
+{{#block('scriptLink')}}
+<script src="/submitEvaluateResult.js"></script>
+{{/block}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/submitEvaluateResult.css"/>
+{{/block}}
+

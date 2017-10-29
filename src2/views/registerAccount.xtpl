@@ -1,0 +1,187 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <div class="page-title">注册账号</div>
+
+  <form class="form-horizontal form-container">
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span>单位级别:</label>
+      <div class="col-md-7 input-content">
+        <label class="radio-inline">
+          <input type="radio" name="org-level" value="SELF" checked> 本单位账号
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="org-level" value="CITY"> 市级账号
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="org-level" value="HOSPITAL"> 器械使用单位账号
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span>账号类型:</label>
+      <div class="col-md-7 input-content">
+        <label class="radio-inline">
+          <input type="radio" name="account-level" value="ADMIN"> 管理员账号
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="account-level" value="NORMAL" checked> 普通账号
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span>所在单位:</label>
+      <div class="col-md-7 input-content">
+        <select id="J_self_org_select" class="form-control select2" placeholder="所在单位"></select>
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span> 姓名:</label>
+      <div class="col-md-7 input-content">
+        <input class="form-control" id="J_name" placeholder="">
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span>性别:</label>
+      <div class="col-md-7 input-content">
+        <label class="radio-inline">
+          <input type="radio" name="sex" value="1" checked> 男
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="sex" value="0"> 女
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span> 邮箱:</label>
+      <div class="col-md-7 input-content">
+        <input type="email" class="form-control" id="J_email" placeholder="">
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span> 联系电话:</label>
+      <div class="col-md-7 input-content">
+        <input class="form-control" id="J_phone" placeholder="">
+      </div>
+    </div>
+
+    <div class="form-group form-item">
+      <label class="col-md-5 control-label label-title"><span class="red-star">*</span> 联系地址:</label>
+      <div class="col-md-7 input-content">
+        <input class="form-control" id="J_address" placeholder="">
+      </div>
+    </div>
+  </form>
+
+  <div class="form-group button-item">
+    <button  class="btn blue-button submit-button">提&emsp;&emsp;交</button>
+    <button  class="btn org-button reset-button">清&emsp;&emsp;空</button>
+  </div>
+
+
+</div>
+
+<!--校检模态框-->
+<div class="modal fade" id="J_verify_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          存在未填项
+        </h4>
+      </div>
+      <div class="modal-body">
+        请将表单中的必填项填写完整,之后重新提交
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary go-back-modify">
+          返回修改
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--邮箱已经注册模态框-->
+<div class="modal fade" id="J_already_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          该邮箱已经被注册
+        </h4>
+      </div>
+      <div class="modal-body">
+        该邮箱已被注册，请更换邮箱重新注册
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary go-back-modify">
+          返回修改
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--注册成功模态框-->
+<div class="success-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_success_modal_template">
+  <div class="modal fade" id="J_success_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          账号注册成功
+        </div>
+        <div class="modal-body">
+          <div class="modal-success-title"><img class="right-icon" src="/image/right.png"/>您已成功注册{{accountLevel}}，账号信息如下</div>
+          <div class="modal-info">
+            <div class="modal-info-item">账号类型：{{orgName}}—{{accountLevel}}</div>
+            <div class="modal-info-item">用户姓名：{{name}}</div>
+            <div class="modal-info-item">联系方式：{{phoneNumber}}</div>
+          </div>
+          <div class="modal-account">
+            <div class="modal-account-item">账&emsp;&emsp;号：{{accountName}}</div>
+            <div class="modal-account-item">密&emsp;&emsp;码：{{accountKey}}</div>
+          </div>
+          <div class="modal-extra">
+            <div class="modal-extra-item">1、您可将该账号信息发送给对应的用户</div>
+            <div class="modal-extra-item">2、可在 <a href="/account/management" target="_self">[各级账号管理-账号管理]</a> 中管理所有账号</div>
+          </div>
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button type="button" class="btn btn-primary register-success-button">
+            确&emsp;&emsp;定
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</script>
+%}}
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/registerAccount.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/registerAccount.css"/>
+{{/block}}
+

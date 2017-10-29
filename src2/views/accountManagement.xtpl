@@ -1,0 +1,269 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <div class="page-title">账号管理</div>
+
+  <div class="query-condition-container">
+    <form class="form-horizontal form-container">
+      <div class="form-group form-item">
+        <label class="col-md-1 control-label label-title">单位级别:</label>
+        <div class="col-md-11 input-content">
+          <label class="radio-inline">
+            <input type="radio" name="org-level" value="SELF" checked> 本单位账号
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="org-level" value="CITY"> 市级账号
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="org-level" value="HOSPITAL"> 器械使用单位账号
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group form-item org-name-select">
+        <label class="col-md-1 control-label label-title">单位名称:</label>
+        <div class="col-md-4 input-content">
+          <select id="J_org_select" class="form-control select2" placeholder="单位名称"></select>
+        </div>
+        <div class="search-button-operate col-md-7">
+          <button class="btn blue-button search-button">查&emsp;&emsp;询</button>
+          <button class="btn org-button reset-button">重&emsp;&emsp;置</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <table class="table table-bordered account-container">
+    <thead>
+    <tr>
+      <th>姓名</th>
+      <th>所在单位</th>
+      <th>单位级别</th>
+      <th>账号类型</th>
+      <th>联系电话</th>
+      <th>登录名</th>
+      <th>密码</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="account-tbody">
+
+    </tbody>
+  </table>
+
+  <div class="pagination-container">
+
+  </div>
+</div>
+
+<!--列表模板-->
+{{%
+<script type="text/x-template" id="J_account_tr_template">
+  {{#each(accountList)}}
+  <tr class="account-user-tr" data-id="{{id}}" data-name="{{name}}" data-sex="{{sex}}" data-orgname="{{orgName}}"
+      data-email="{{email}}" data-phonenumber="{{phoneNumber}}" data-address="{{address}}"
+      data-accountrole="{{accountRole}}" data-accountname="{{accountName}}" data-accountkey="{{accountKey}}"
+      data-active="{{isActive}}" data-orglevel="{{orgLevel}}">
+    <td>{{name}}</td>
+    <td>{{orgName}}</td>
+    <td>{{orgLevel}}</td>
+    <td>{{accountRole}}</td>
+    <td>{{phoneNumber}}</td>
+    <td>{{accountName}}</td>
+    <td>{{accountKey}}</td>
+    <td>{{isActive}}</td>
+    <td>
+      <a class="td-href account-look">查看</a>
+      <a class="td-href account-modify">修改</a>
+      <a class="td-href account-active">{{#if(isActive==='已启用')}}停用{{else}}启用{{/if}}</a>
+    </td>
+  </tr>
+  {{/each}}
+</script>
+%}}
+
+<!--分页器模板-->
+{{%
+<script type="text/x-template" id="J_account_pagination_template">
+  <ul class="pagination">
+    <li class="pagination-left"><a href="#" class="pagination-left-href">&laquo;</a></li>
+    {{#each(paginationList)}}
+    <li class="pagination-item {{#if(this===currentPage)}}active{{/if}}"><a href="#" class="pagination-item-href">{{this}}</a>
+    </li>
+    {{/each}}
+    <li class="pagination-right"><a href="#" class="pagination-right-href">&raquo;</a></li>
+  </ul>
+</script>
+%}}
+
+
+<!--账户资料-查看-模板-->
+<div class="account-look-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_account_look_template">
+  <div class="modal fade" id="J_account_look_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          账号详细信息
+        </div>
+        <div class="modal-body">
+          <div class="personal-look-data">
+            <div class="personal-look-title">个人资料</div>
+            <div class="personal-look-item">姓&emsp;&emsp; 名 : &emsp;{{name}}</div>
+            <div class="personal-look-item">性&emsp;&emsp; 别 : &emsp;{{#if(sex===1)}}男{{else}}女{{/if}}</div>
+            <div class="personal-look-item">所在单位 : &emsp;{{orgName}}</div>
+            <div class="personal-look-item">邮&emsp;&emsp; 箱 : &emsp;{{email}}</div>
+            <div class="personal-look-item">联系电话 : &emsp;{{phoneNumber}}</div>
+            <div class="personal-look-item">联系地址 : &emsp;{{address}}</div>
+          </div>
+
+          <div class="account-look-data">
+            <div class="account-look-title">账号信息</div>
+            <div class="account-look-item">账号类型 : &emsp;{{accountRole}}</div>
+            <div class="account-look-item">登录账号 : &emsp;{{accountName}}</div>
+            <div class="account-look-item">密&emsp;&emsp; 码 : &emsp;{{accountKey}}</div>
+            <div class="account-look-item">状&emsp;&emsp; 态 : &emsp;{{isActive}}</div>
+          </div>
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button type="button" class="btn btn-primary ok-button">
+            确&emsp;&emsp;定
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+
+<!--账户资料-修改-模板-->
+<div class="account-modify-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_account_modify_template">
+  <div class="modal fade" id="J_account_modify_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          账号信息修改
+        </div>
+        <div class="modal-body">
+          <div class="personal-look-data">
+            <div class="personal-look-title">个人资料</div>
+            <form class="form-horizontal form-container form-modify-modal">
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span> 姓名:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_name" placeholder="" value="{{name}}">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>性别:</label>
+                <div class="col-md-9 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="sex" value="1" {{#if(sex===1)}}checked{{/if}}> 男
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="sex" value="0" {{#if(sex===0)}}checked{{/if}}> 女
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>所在单位:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_org_name" placeholder="" value="{{orgName}}" disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span> 邮箱:</label>
+                <div class="col-md-9 input-content">
+                  <input type="email" class="form-control" id="J_email" placeholder="" value="{{email}}">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span> 联系电话:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_phone" placeholder="" value="{{phoneNumber}}">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span> 联系地址:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_address" placeholder="" value="{{address}}">
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="account-look-data">
+            <div class="account-look-title">账号信息</div>
+            <form class="form-horizontal form-container form-modify-modal">
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>账号类型:</label>
+                <div class="col-md-9 input-content">
+                  <label class="radio-inline">
+                    <input type="radio" name="account-level" value="ADMIN" {{#if(accountRole==='管理员账号')}}checked{{/if}}>
+                    管理员账号
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="account-level" value="NORMAL" {{#if(accountRole==='普通账号')}}checked{{/if}}>
+                    普通账号
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span> 登录账号:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_account_name" placeholder="" value="{{accountName}}"
+                         disabled="disabled">
+                </div>
+              </div>
+
+              <div class="form-group form-item">
+                <label class="col-md-2 control-label label-title"><span class="red-star">*</span>
+                  密&emsp;&emsp;码:</label>
+                <div class="col-md-9 input-content">
+                  <input class="form-control" id="J_account_key" placeholder="" value="{{accountKey}}">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button class="btn blue-button submit-button">修&emsp;&emsp;改</button>
+          <button class="btn org-button reset-button">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/accountManagement.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/accountManagement.css"/>
+{{/block}}
+

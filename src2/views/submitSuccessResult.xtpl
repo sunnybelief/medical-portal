@@ -1,0 +1,20 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <img class="success-img" src="/image/right.png"/>
+  <h4>上报成功，报告编号：#{{observeId}}</h4>
+  <button class="btn blue-button continue-post">继续填写上报</button>
+  <br/>
+  <button class="btn org-button look-report">查看已上报的报告</button>
+
+</div>
+{{/block}}
+
+{{#block('scriptLink')}}
+<script src="/submitSuccessResult.js"></script>
+{{/block}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/submitSuccessResult.css"/>
+{{/block}}
+

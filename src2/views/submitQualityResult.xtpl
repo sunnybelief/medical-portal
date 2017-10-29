@@ -1,0 +1,23 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <img class="success-img" src="/image/right.png"/>
+  <h4>质量评估成功，报告编号：#{{observeId}}</h4>
+  <br/>
+  <button class="btn blue-button look-report"
+          data-observeid="{{observeId}}"
+          data-accidentid="{{accidentId}}"
+          data-isaccident="{{isAccident}}">查看已评估的报告
+  </button>
+
+</div>
+{{/block}}
+
+{{#block('scriptLink')}}
+<script src="/submitQualityResult.js"></script>
+{{/block}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/submitQualityResult.css"/>
+{{/block}}
+

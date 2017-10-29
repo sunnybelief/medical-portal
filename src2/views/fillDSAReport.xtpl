@@ -1,0 +1,658 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<input type="hidden" name="categoryId" value="1">
+<input type="hidden" name="categoryName" value="数字减影血管造影机">
+<input type="hidden" name="isAccident" value="{{isAccident}}">
+<input type="hidden" name="ObserveReportId" value="{{observeId}}">
+<input type="hidden" name="AccidentReportId" value="{{accidentId}}">
+
+<div class="body-implement">
+  <div id="rootwizard">
+    {{#if(isAccident ==='Y')}}
+    <ul>
+      <li class="observe-tab-li"><a href="#tab1" data-toggle="tab"><span class="label">1</span> 填写监测观察表</a></li>
+      <li class="bad-tab-li"><a href="#tab2" data-toggle="tab"><span class="label">2</span> 填写不良事件报告表</a></li>
+    </ul>
+    {{else}}
+    <ul style="">
+      <li style=""><a href="#tab1" data-toggle="tab"><span class="label">1</span> 填写监测观察表</a></li>
+    </ul>
+    {{/if}}
+
+    <div class="tab-content">
+      <div class="tab-content">
+        <!--填写监测观察表-->
+        <div class="tab-pane" id="tab1">
+          <div class="report-title">
+            <span>数字减影血管造影机重点监测使用观察表</span>
+          </div>
+          <div class="report-code">观察表编码：提交后自动生成</div>
+
+          <form class="form-horizontal form-container">
+            <div class="form-group form-item">
+              <label class="col-md-1 control-label border-left border-bottom border-right">监测地点:</label>
+              <div class="col-md-11 control-label border-right border-bottom">
+                <select id="J_org_select" class="form-control select2" placeholder="所在单位"></select>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label class="col-md-1 control-label border-left border-bottom border-right">使用科室:</label>
+              <div class="col-md-11 control-label border-right border-bottom">
+                <label class="radio-inline">
+                  <input type="radio" name="office" value="介入科导管室"> 介入科、导管室
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="office" value="影像科放射科"> 影像科、放射科
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="office" value="其他"> 其他
+                  <input class="input-modify" id="J_office_other" placeholder="其他请填写">
+                </label>
+
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-1 control-label control-label-patient label-patient-title border-left border-bottom border-right">患者信息:</label>
+              <div class="col-md-11 control-label control-label-patient border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label"> 姓&emsp;&emsp;名:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_name" placeholder="">
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">性&emsp;&emsp;别:</label>
+                  <div class="input-content">
+                    <label class="radio-inline">
+                      <input type="radio" name="sex" value="1"> 男
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="sex" value="0"> 女
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">年&emsp;&emsp;龄:</label>
+                  <div class="input-content">
+                    <label class="radio-inline">
+                      <input type="radio" name="old" value="年龄"> 年龄
+                      <input class="input-modify" id="J_office_old" placeholder="">
+                      <select id="J_office_old_select" class="" placeholder="">
+                        <option value="岁">岁</option>
+                        <option value="月">月</option>
+                        <option value="周">周</option>
+                      </select>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="old" value="出生日期"> 出生日期
+                      <input class="input-modify" id="J_office_birthday" placeholder="yyyy年/mm月/dd日">
+                    </label>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label class="col-md-1 control-label border-left border-bottom border-right">住院号:</label>
+              <div class="col-md-11 control-label border-right border-bottom">
+                <input class="input-modify" id="J_hospital_number" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label class="col-md-1 control-label border-left border-bottom border-right">临床诊断:</label>
+              <div class="col-md-11 control-label border-right border-bottom">
+                <input class="input-modify" id="J_hospital_judge" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label class="col-md-1 control-label border-left border-bottom border-right">手术名称:</label>
+              <div class="col-md-11 control-label border-right border-bottom">
+                <input class="input-modify" id="J_operation_name" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label control-label-equipment label-equipment-title border-left border-bottom border-right">临床使用信息:</label>
+              <div class="col-md-10 control-label control-label-equipment border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label"> 器械名称:</label>
+                  <div class="input-content">
+                    <select id="J_equipment_select" class="form-control select2" placeholder="器械名称"></select>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">曝光量&emsp;:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_exposure" placeholder="">
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">当日已开机连续工作时间:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_work_time" placeholder="">
+                    <label class="label-tip">小时</label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">开始时间:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_start_time" placeholder="">
+                  </div>
+
+                  <label class="second-label">结束时间:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_end_time" placeholder="">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label control-label-squirt label-squirt-title border-left border-bottom border-right">此临床合并使用的高压注射器:</label>
+              <div class="col-md-10 control-label control-label-squirt border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">器械名称:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_equipment" placeholder="">
+                  </div>
+
+                  <label class="second-label">生产企业:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_factory" placeholder="">
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">规格型号:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_spec" placeholder="">
+                  </div>
+
+                  <label class="second-label">使用方法:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_method" placeholder="">
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">开始时间:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_start_time" placeholder="">
+                  </div>
+
+                  <label class="second-label">结束时间:</label>
+                  <div class="input-content">
+                    <input class="input-modify" id="J_squirt_end_time" placeholder="">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!--<div class="form-group form-item">-->
+            <!--<label class="col-md-2 control-label border-left border-bottom border-right">是否发生不良事件:</label>-->
+            <!--<div class="col-md-10 control-label border-right border-bottom">-->
+            <!--<label class="radio-inline">-->
+            <!--<input type="radio" name="badThing" value="1" disabled="disabled"> 否-->
+            <!--</label>-->
+            <!--<label class="radio-inline">-->
+            <!--<input type="radio" name="badThing" value="0" checked > 是-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label control-label-bad label-bad-title border-left border-bottom border-right">不良事件表现:</label>
+              <div class="col-md-10 control-label control-label-bad border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <div class="div-second-title">1、造影机操作台:</div>
+                  <div class="input-content new-line-input">
+                    <label class="radio-inline">
+                      <input type="radio" name="badDesk" value="无法启动"> 无法启动
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badDesk" value="跳闸自动关机"> 跳闸，自动关机
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badDesk" value="高温报警"> 高温报警
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badDesk" value="启动后无法工作"> 启动后无法工作
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badDesk" value="其他"> 其他
+                      <input class="input-modify" id="J_bad_desk_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <div class="div-second-title">2、C型臂、球管等:</div>
+                  <div class="input-content new-line-input">
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="无法移动旋转"> 无法移动、旋转
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="球管过热"> 球管过热
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="球管出现打火现象"> 球管出现打火现象
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="无射线不曝光"> 无射线、不曝光
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="光圈异常"> 光圈异常
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badC" value="其他"> 其他
+                      <input class="input-modify input-modify-c" id="J_bad_c_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <div class="div-second-title">3、图像情况:</div>
+                  <div class="input-content new-line-input">
+                    <label class="radio-inline ">
+                      <input type="radio" name="badImage" value="图像不能保存"> 图像不能保存
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="有射线无图像"> 有射线、无图像
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="出现伪影"> 出现伪影
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="出现残影"> 出现残影
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="出现亮线"> 出现亮线
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="图像模糊难以辨识"> 图像模糊难以辨识
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badImage" value="其他"> 其他
+                      <input class="input-modify input-modify-image" id="J_bad_image_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <div class="div-second-title">4、手术床:</div>
+                  <div class="input-content new-line-input">
+                    <label class="radio-inline">
+                      <input type="radio" name="badBed" value="床面断电"> 床面断电
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badBed" value="无法移动"> 无法移动
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badBed" value="不能锁定"> 不能锁定
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badBed" value="突然解锁移动"> 突然解锁，移动
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badBed" value="输液架无法固定"> 输液架无法固定
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <div class="div-second-title">5、设备部件脱落:</div>
+                  <div class="input-content new-line-input">
+                    <label class="radio-inline">
+                      <input type="radio" name="badPart" value="防护铅板脱落"> 防护铅板脱落
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badPart" value="C型臂脱落"> C型臂脱落
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badPart" value="其他"> 其他
+                      <input class="input-modify" id="J_bad_part_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label second-label-no">6、</label>
+                  <div class="input-content">
+                    <label class="radio-inline">
+                      <input type="radio" name="badRadiate" value="医患出现明显的射线灼伤或其他辐射过量症状"> 医患出现明显的射线灼伤或其他辐射过量症状
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badRadiate" value="其他"> 其他
+                      <input class="input-modify" id="J_bad_radiate_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label second-label-no">7、</label>
+                  <div class="input-content">
+                    <label class="radio-inline">
+                      <input type="radio" name="badMatter" value="机器卷入异物无法正常运转"> 机器卷入异物，无法正常运转
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="badMatter" value="其他"> 其他
+                      <input class="input-modify" id="J_bad_matter_other" placeholder="其他请填写">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label class="col-md-2 control-label border-left border-bottom border-right">报告人:</label>
+              <div class="col-md-10 control-label border-right border-bottom local-report-name" disabled="disabled">
+              </div>
+            </div>
+          </form>
+
+          {{#if(isAccident ==='Y')}}
+          <div class="form-group button-item">
+            <button class="btn org-button submit-observe submit-temp-button">暂&emsp;&emsp;存</button>
+            <button id="J_continue_harm_fill" class="btn blue-button  ">继续填写不良事件报告表</button>
+          </div>
+          {{else}}
+          <div class="form-group button-item">
+            <button class="btn org-button submit-observe submit-temp-button">暂&emsp;&emsp;存</button>
+            <button class="btn blue-button submit-observe submit-ok-button">提&emsp;&emsp;交</button>
+          </div>
+          {{/if}}
+
+        </div>
+
+        <!--填写不良事件报告表-->
+        <div class="tab-pane" id="tab2">
+          <div class="report-title">
+            <span>数字减影血管造影机不良事件报告表</span>
+          </div>
+
+          <form class="form-horizontal form-container">
+
+            <div class="form-group form-item">
+              <label class="col-md-2 control-label border-left border-bottom border-right">不良事件发生时间:</label>
+              <div class="col-md-10 control-label border-right border-bottom">
+                <label class="radio-inline">
+                  <input type="radio" name="harmTime" value="临床使用期间"> 临床使用期间
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="harmTime" value="设备日常维护检测期间"> 设备日常维护检测期间
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group form-item ">
+              <label
+                class="col-md-2 control-label  harm-description-label harm-description-label-title border-left border-bottom border-right">不良事件过程描述:</label>
+              <div class="col-md-10 control-label  harm-description-label border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">1、是否涉及造影机故障:</label>
+                  <div class="input-content">
+                    <label class="radio-inline">
+                      <input type="radio" name="harmMachineSelf" value="是"> 是
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmMachineSelf" value="否"> 否
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group form-item form-item-second">
+                  <div class="second-text">2、过程描述:</div>
+                  <div class="input-content">
+                    <textarea class="harm-status-description" placeholder="包括症状、体征、临床检验等"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label harm-operate-label harm-operate-label-title border-left border-bottom border-right">不良事件处理情况:</label>
+              <div class="col-md-10 control-label harm-operate-label border-right border-bottom">
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOperate" value="不需处理自动恢复"> 不需处理，自动恢复
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOperate" value="重启设备后恢复"> 重启设备后恢复
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOperate" value="更换设备短时暂停"> 更换设备，短时暂停
+                  <input class="input-modify" id="J_harm_operate_during" placeholder=""> 分钟后，继续手术
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOperate" value="手术中止维修设备"> 手术中止，维修设备
+                </label>
+                <div class="">
+                  <label class="text-label">处理措施具体描述：</label>
+                  <input class="input-modify" id="J_harm_operate_description" placeholder="">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item ">
+              <label
+                class="col-md-2 control-label  harm-reason-label harm-reason-label-title border-left border-bottom border-right">事件发生初步原因分析:</label>
+              <div class="col-md-10 control-label  harm-reason-label border-right border-bottom">
+                <textarea class="harm-reason-description" placeholder=""></textarea>
+              </div>
+            </div>
+
+            <div class="form-group form-item ">
+              <label
+                class="col-md-2 control-label  harm-repair-label harm-repair-label-title border-left border-bottom border-right">设备维修后的情况:</label>
+              <div class="col-md-10 control-label  harm-repair-label border-right border-bottom">
+                <textarea class="harm-repair-description" placeholder=""></textarea>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label harm-serious-label harm-serious-label-title border-left border-bottom border-right">不良事件严重程度:</label>
+              <div class="col-md-10 control-label harm-serious-label border-right border-bottom">
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmSerious" value="对患者无影响"> 对患者无影响
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmSerious" value="一般"> 一般
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmSerious" value="严重"> 严重
+                </label>
+
+                <div class="harm-serious-detail">
+                  <label class="text-label">----如果是严重不良事件，则为----</label>
+                  <label class="radio-div radio-inline">
+                    <input type="radio" name="harmSeriousDetail" value="死亡"> 死亡
+                  </label>
+                  <label class="radio-div radio-inline">
+                    <input type="radio" name="harmSeriousDetail" value="危及生命"> 危及生命
+                  </label>
+                  <label class="radio-div radio-inline">
+                    <input type="radio" name="harmSeriousDetail" value="机体功能机构永久性损伤"> 机体功能结构永久性损伤
+                  </label>
+                  <label class="radio-div radio-inline">
+                    <input type="radio" name="harmSeriousDetail" value="需要内外科治疗避免上述永久损伤"> 需要内、外科治疗避免上述永久损伤
+                  </label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label harm-result-label harm-result-label-title border-left border-bottom border-right">不良事件后果:</label>
+              <div class="col-md-10 control-label harm-result-label border-right border-bottom">
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmResult" value="痊愈"> 痊愈
+                  <div class="go-out-time-container second-container">
+                    <label class="text-label">转归时间 </label>
+                    <input class="input-modify" id="J_harm_gout_time" placeholder="">
+                  </div>
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmResult" value="有后遗症"> 有后遗症
+                </label>
+                <div class="sequel-container second-container">
+                  <label class="text-label">后遗症表现</label>
+                  <input class="input-modify" id="J_harm_sequel" placeholder="">
+                </div>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmResult" value="死亡"> 死亡
+                </label>
+                <div class="died-time-container second-container">
+                  <label class="text-label">死亡时间 </label>
+                  <input class="input-modify" id="J_harm_died_time" placeholder="">
+                </div>
+                <div class="died-reason-container">
+                  <label class="text-label">直接死因 </label>
+                  <input class="input-modify" id="J_harm_died_reason" placeholder="">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label harm-original-label harm-original-label-title border-left border-bottom border-right">对原患疾病的影响:</label>
+              <div class="col-md-10 control-label harm-original-label border-right border-bottom">
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOriginal" value="不明显"> 不明显
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOriginal" value="病程延长"> 病程延长
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOriginal" value="病情加重"> 病情加重
+                </label>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOriginal" value="导致后遗症"> 导致后遗症
+                </label>
+                <div class="second-container sequel-container">
+                  <label class="text-label">后遗症表现</label>
+                  <input class="input-modify" id="J_original_sequel" placeholder="">
+                </div>
+                <label class="radio-div radio-inline">
+                  <input type="radio" name="harmOriginal" value="导致死亡"> 导致死亡
+                </label>
+                <div class="second-container died-time-container">
+                  <label class="text-label">死亡时间 </label>
+                  <input class="input-modify" id="J_original_died_time" placeholder="">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item ">
+              <label
+                class="col-md-2 control-label  harm-relation-label harm-relation-label-title border-left border-bottom border-right">不良事件关联性评价:</label>
+              <div class="col-md-10 control-label  harm-relation-label border-right border-bottom">
+
+                <div class="form-group form-item form-item-second">
+                  <label class="second-label">1、使用医疗器械与已发生/可能发生的伤害事件之间是否具有合理的先后时间顺序？</label>
+                  <div class="input-content input-second-div">
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation1" value="是"> 是
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation1" value="否"> 否
+                    </label>
+                  </div>
+                  <label class="second-label">2、发生/可能发生的伤害事件是否属于所使用医疗器械可能导致的伤害类型？</label>
+                  <div class="input-content input-second-div">
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation2" value="是"> 是
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation2" value="否"> 否
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation2" value="无法确定"> 无法确定
+                    </label>
+                  </div>
+                  <label class="second-label">3、已发生/可能发生的伤害事件是否可以用合并用械的作用、患者病情或其他非医疗器械因素来解释？</label>
+                  <div class="input-content input-second-div">
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation3" value="是"> 是
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation3" value="否"> 否
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="harmRelation3" value="无法确定"> 无法确定
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-item">
+              <label
+                class="col-md-2 control-label control-last-label control-last-label-title border-left border-bottom border-right">与血管造影机的因果关系评价:</label>
+              <div
+                class="col-md-10 control-label control-last-label control-last-label-data border-right border-bottom">
+                <label class="radio-inline">
+                  <input type="radio" name="harmRelationResult" value="很有可能"> 很有可能
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="harmRelationResult" value="可能有关"> 可能有关
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="harmRelationResult" value="可能无关"> 可能无关
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="harmRelationResult" value="无法确定"> 无法确定
+                </label>
+              </div>
+            </div>
+
+          </form>
+
+          <div class="form-group button-item">
+            <button id="J_go_back_modify" class="btn org-button btn-default"><span class="glyphicon glyphicon-menu-left"
+                                                                                   aria-hidden="true"></span>
+              返回上一步修改监测观察表
+            </button>
+            <button id="J_submit_harm" class="btn blue-button submit-harm submit-ok-harm">提&emsp;&emsp;交</button>
+            <button id="J_temp_harm" class="btn org-button submit-harm submit-temp-harm">暂&emsp;&emsp;存</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/fillDSAReport.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/fillDSAReport.css"/>
+{{/block}}
+

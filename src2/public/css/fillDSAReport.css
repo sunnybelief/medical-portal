@@ -1,0 +1,395 @@
+/*改造表格*/
+.report-title {
+  background-color: #3459A3;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
+  border-left: 1px solid #3459a3;
+  border-right: 1px solid #3459a3;
+}
+
+.report-code {
+  float: right;
+  margin-top: -27px;
+  color: #fff;
+  margin-right: 19px;
+  font-size: 12px;
+}
+
+.form-horizontal .form-group {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.control-label {
+  height: 44px;
+  text-align: left !important;
+  padding-top: 13px !important;
+}
+
+.form-group.form-item {
+  margin-bottom: 0px;
+}
+
+.border-left {
+  border-left: 1px solid #333 !important;
+}
+
+.border-right {
+  border-right: 1px solid #333 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #333 !important;
+}
+
+.border-top {
+  border-top: 1px solid #333 !important;
+}
+
+/*改造所有的输入框项*/
+.select2-container--default .select2-selection--single {
+  background-color: #fff;
+  border-bottom: 1px solid #333;
+  border-radius: 0px;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+
+.select2-container {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  width: 537px !important;
+  margin-bottom: -3px;
+}
+
+.select2-container .select2-selection--single {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 26px;
+  position: absolute;
+  top: -10px;
+  right: 1px;
+  width: 20px;
+}
+
+.checkbox-inline, .radio-inline {
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-top: -8px !important;
+  margin-right: 12px;
+}
+
+.input-modify {
+  border-bottom: 1px solid #333;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  width: 230px;
+  font-size: 12.5px;
+}
+
+.second-label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: normal;
+  float: left;
+  margin-right: 12px;
+}
+
+input#J_name {
+  width: 100px;
+}
+
+.control-label-patient {
+  height: 110px;
+}
+
+.form-item-second {
+  margin-bottom: 10px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-style: none;
+}
+
+input#J_office_old {
+  width: 50px;
+  text-align: center;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+  position: absolute;
+  margin-top: 4px \9;
+  margin-left: -20px;
+  margin-top: 1px;
+}
+
+select#J_office_old_select {
+  margin-top: -3px;
+}
+
+input#J_operation_name, #J_hospital_judge {
+  width: 95%;
+}
+
+input#J_office_birthday {
+  width: 235px;
+  padding-left: 25px;
+}
+
+input#J_exposure {
+  width: 536px;
+}
+
+label.label-tip {
+  font-weight: normal;
+}
+
+input#J_work_time {
+  width: 90px;
+  text-align: center;
+}
+
+.control-label-equipment {
+  height: 152px;
+}
+
+#J_start_time, #J_end_time, #J_squirt_equipment, #J_squirt_factory, #J_squirt_spec, #J_squirt_method, #J_squirt_start_time, #J_squirt_end_time {
+  width: 210px;
+  float: left;
+  margin-right: 50px;
+}
+
+.label-equipment-title {
+  padding-top: 68px !important;
+}
+
+.label-patient-title {
+  padding-top: 45px !important;
+}
+
+.control-label-squirt {
+  height: 115px;
+}
+
+.label-squirt-title {
+  padding-top: 45px !important;
+}
+
+.control-label-bad {
+  height: 410px;
+}
+
+/*.input-content {*/
+/*width: 900px !important;*/
+/*}*/
+
+.label-bad-title {
+  padding-top: 190px !important;
+}
+
+.div-second-title {
+  margin-bottom: 10px;
+}
+
+.new-line-input {
+  margin-left: 22px;
+}
+
+.second-label-no {
+  margin-right: 2px !important;
+}
+
+
+.form-group.button-item {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  line-height: 15px !important;
+}
+
+textarea.harm-status-description {
+  resize: none;
+  width: 95%;
+  height: 150px;
+  padding-left: 10px;
+  padding-top: 6px;
+  margin-top: 7px;
+  font-size: 12px;
+  background-color: #f1f1f1;
+}
+
+.second-text {
+  margin-top: -13px;
+}
+
+.harm-description-label {
+  height: 223px;
+}
+
+.harm-description-label-title {
+  padding-top: 90px !important;
+}
+
+.radio-div {
+  margin-bottom: 11px !important;
+  display: block;
+  width: fit-content;
+}
+
+input#J_harm_operate_during {
+  width: 44px;
+  text-align: center;
+}
+
+input#J_harm_operate_description {
+  width: 83%;
+  font-size: 12px !important;
+}
+
+label.text-label {
+  font-weight: normal;
+}
+
+.harm-operate-label {
+  height: 156px;
+}
+
+.harm-operate-label-title {
+  padding-top: 69px !important;
+}
+
+textarea.harm-reason-description, textarea.harm-repair-description {
+  resize: none;
+  width: 95%;
+  height: 67px;
+  padding-left: 10px;
+  padding-top: 6px;
+  font-size: 12px;
+  background-color: #f1f1f1;
+}
+
+.harm-reason-label, .harm-repair-label {
+  height: 93px;
+}
+
+.harm-reason-label-title, .harm-repair-label-title {
+  padding-top: 40px !important;
+}
+
+.control-label.harm-serious-label {
+  height: 246px;
+}
+
+.harm-serious-detail {
+  background-color: #f1f1f1;
+  width: 400px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 1px;
+}
+
+.harm-serious-label-title {
+  padding-top: 114px !important;
+}
+
+.second-container {
+  margin-top: 7px;
+}
+
+.sequel-container, .died-time-container, .died-reason-container {
+  margin-left: 20px;
+}
+
+.sequel-container {
+  margin-top: -7px !important;
+  margin-bottom: 15px;
+}
+
+.died-time-container {
+  margin-top: -7px;
+  margin-bottom: 3px;
+}
+
+input#J_harm_died_reason {
+  width: 90%;
+}
+
+input#J_harm_sequel {
+  width: 89%;
+}
+
+.harm-result-label-title {
+  padding-top: 94px !important;
+}
+
+.harm-result-label {
+  height: 206px !important;
+}
+
+.harm-original-label {
+  height: 206px !important;
+}
+
+.harm-original-label-title {
+  padding-top: 94px !important;
+}
+
+input#J_original_sequel {
+  width: 89%;
+}
+
+.input-second-div {
+  clear: both;
+  margin-left: 22px;
+}
+
+.harm-relation-label {
+  height: 160px;
+}
+
+.harm-relation-label-title {
+  padding-top: 71px !important;
+}
+
+.control-last-label {
+  height: 58px;
+}
+
+.control-last-label-data {
+  padding-top: 23px !important;
+}
+
+button#J_submit_harm {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+button.btn.org-button.submit-observe.submit-temp-button {
+  margin-right: 25px;
+}
+

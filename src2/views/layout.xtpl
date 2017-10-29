@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>国家医疗器械监测平台</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/select2.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/toastr.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/wizard/custom.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/wizard/default.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/wizard/normalize.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/wizard/prettify.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker3.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+  {{{block('styleLink')}}}
+</head>
+<body>
+<!--吊顶-->
+<div class="top-nav-container" style="">
+  <input type="hidden" name="top-menu" value="{{topMenu}}">
+  <input type="hidden" name="sub-menu" value="{{subMenu}}">
+
+  <div class="top-nav-title">国家医疗器械监测平台</div>
+
+  <div class="top-nav-user-container btn-group">
+    <button type="button" class="btn top-nav-user dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+      <span class="login-user-name">未登录</span> <span class="caret top-user-caret"></span>
+    </button>
+    <ul class="dropdown-menu top-nav-user-drop">
+      <li><a href="/account/self">账号资料</a></li>
+      <li><a href="/account/self">修改密码</a></li>
+      <li><a href="/login">切换账号</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+  <tbody>
+  <tr>
+    <!--左侧动态菜单-->
+    <td class="left-nav-td" style="">
+      <div class="left-nav-menu">
+        <div class="sidebar content-box" style="display: block;">
+          <ul class="nav left-nav-ul">
+
+
+          </ul>
+        </div>
+      </div>
+    </td>
+
+    <!--右侧主体内容-->
+    <td class="right-nav-td">
+      <div class="main-container">
+        {{{block('content')}}}
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!--网络不稳定弹窗-->
+<div class="modal fade" id="J_network_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+          网络不稳定
+        </h4>
+      </div>
+      <div class="modal-body">
+        当前网络不稳定，请稍后重试
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary go-back">
+          确定
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--左侧动态菜单模板-->
+{{%
+<script type="text/x-template" id="J_left_menu_template">
+  {{#each(menuList)}}
+  {{#if(content && content.length)}}
+  <li class="submenu {{idCode}}">
+    <a href="#">
+      <img src="/image/{{image}}"/> {{name}}
+      <span class="caret pull-right"></span>
+    </a>
+    <!-- Sub menu -->
+    <ul>
+      {{#each(content)}}
+      <li class="{{idCode}}"><a href="{{href}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
+  </li>
+  {{else}}
+  <li class="{{idCode}}"><a href="{{href}}"><img src="/image/{{image}}"/> {{name}}</a></li>
+  {{/if}}
+  {{/each}}
+</script>
+%}}
+
+<script src="/global-js/jquery-3.2.1.min.js"></script>
+<script src="/global-js/select2.full.min.js"></script>
+<script src="/global-js/toastr.min.js"></script>
+<script src="/global-js/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="/global-js/wizard/prettify.js"></script>
+<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="/global-js/bootstrap-datepicker.min.js"></script>
+<script src="/global-js/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="/left-nav-menu.js"></script>
+{{{block('scriptLink')}}}
+</body>
+</html>

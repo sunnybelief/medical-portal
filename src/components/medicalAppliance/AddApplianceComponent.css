@@ -1,0 +1,47 @@
+.normal {
+  flex: 1;
+  height: 100%;
+  padding-bottom: 100px;
+}
+
+.topContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topContainer text {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.line {
+  width: 90%;
+  height: 1px;
+  background-color: #45547A;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.partTitle {
+  margin-bottom: 10px;
+}
+
+.partTitle text {
+  font-size: 13px;
+  color: #345997;
+  font-weight: bold;
+  margin-left: 40px;
+}
+.itemBtm{
+  width: 100%;
+  margin-top: 30px;
+}
+.btmBtn {
+  width: 100%;
+  color: #ffffff;
+  font-size: 12px;
+  background-color:#3459A3 ;
+}
+

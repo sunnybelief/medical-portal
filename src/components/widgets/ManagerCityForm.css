@@ -1,0 +1,11 @@
+.formContainer{
+  width: 100%;
+}
+.formItem{
+  margin-bottom: 10px;
+}
+.formContainer Button{
+  font-size: 11px;
+  width: 80px;
+  margin-left: 15px;
+}

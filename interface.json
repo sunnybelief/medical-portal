@@ -1,0 +1,27 @@
+{
+  "title": "midway interface configuration",
+  "version": "1.0.0",
+  "status": "online",
+  "interfaces": [
+    {
+      "name": "健康检查",
+      "id": "Health.check.for.project",
+      "method": "get",
+      "dataType": "json",
+      "urls": {
+        "online": "http://127.0.0.1:9090/getUserById"
+      },
+      "timeout": 30000
+    },
+    {
+      "name": "获取左侧动态菜单数据",
+      "id": "get.left.menu.data",
+      "method": "post",
+      "dataType": "json",
+      "urls": {
+        "online": "http://115.159.211.47:8090/login?username=20009&password=123"
+      },
+      "timeout": 30000
+    }
+  ]
+}

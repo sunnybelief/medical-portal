@@ -1,0 +1,71 @@
+.select-equipment-container {
+  background-image: url(/image/folder.png);
+  background-size: 100% 100%;
+  width: 212px;
+  height: 153px;
+  margin-top: 20px;
+  float: left;
+  margin-right: 7px;
+  margin-left: 8px;
+  padding-top: 17px;
+  cursor: pointer;
+}
+
+.select-equipment-html {
+  margin-right: auto;
+  margin-left: auto;
+  width: 1135px;
+  text-align: center;
+}
+
+.category-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: #357ABB;
+}
+
+.fill-tip {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.fill-tip {
+  font-size: 13px;
+  font-weight: 900;
+  margin-top: 47px;
+  background-color: #F4F7ED;
+  margin-left: 24px;
+  margin-right: 24px;
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 4px;
+}
+
+img.right-fill-go {
+  width: 21px;
+  margin-top: -4px;
+  margin-right: -12px;
+}
+
+.accident-modal-select {
+  font-weight: normal;
+  margin-left: 22px;
+}
+
+.accident-select-first {
+  margin-bottom: 15px;
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+}
+
+.go-into-fill {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}

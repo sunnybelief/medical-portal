@@ -1,0 +1,15 @@
+.normal {
+
+}
+.card{
+  width: 300px;
+  margin-right: 50px;
+  margin-top: 180px;
+}
+.formInput{
+  width: 250px;
+}
+.formBtn{
+  width: 250px;
+  z-index: 10;
+}

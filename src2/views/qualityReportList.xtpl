@@ -1,0 +1,189 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <input type="hidden" name="schemeId" value="{{schemeId}}">
+  <div class="page-title">{{schemeName}}</div>
+
+  <!--导航-->
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active nav-li-1" data-status="未评估"><a class="nav-a-1" href="#">未评估</a>
+    </li>
+    <li role="presentation" class="nav-li-2" data-status="已评估"><a class="nav-a-2" href="#">已评估</a></li>
+  </ul>
+
+  <table class="table table-bordered report-container">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>得分</th>
+      <th>报告日期</th>
+      <th>不良事件</th>
+      <th>报告单位</th>
+      <th>监测机构</th>
+      <th>器械类别</th>
+      <th>评估状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="report-tbody">
+
+    </tbody>
+  </table>
+
+  <div class="pagination-container">
+
+  </div>
+</div>
+
+
+<!--列表模板-->
+{{%
+<script type="text/x-template" id="J_report_tr_template">
+  {{#each(reportList)}}
+  <tr class="temp-report-tr" data-observeid="{{id}}" data-accidentid="{{accidentId}}"
+      data-hasaccident="{{hasAccident}}" data-evaluatorid="{{evaluatorId}}">
+    <td>{{id}}</td>
+    {{#if(qualityHandGradeTotal)}}
+    <td>{{qualityHandGradeTotal}}</td>
+    {{else}}
+    <td>/</td>
+    {{/if}}
+    <td>{{formatDate(gmtCreated)}}</td>
+    <td>{{chineseYN(hasAccident)}}</td>
+    <td>{{formatOrgName(reportOrgName)}}</td>
+    <td>{{higherOrgName}}</td>
+    <td>{{equipmentCategory}}</td>
+    <td>{{qualityStatus}}</td>
+    <td>
+      {{#if(qualityStatus==='未评估')}}
+      <!--判定谁领取了该报告的评估权-->
+      {{#if(qualityEvaluateId===selfId)}}
+      <a class="td-href report-review">评估 <span class="report-have-locked">我已锁定</span></a>
+      {{elseif(!qualityEvaluateId)}}
+      <a class="td-href report-review">进入评估</a>
+      {{else}}
+      <a class="td-href report-have-locked">{{qualityEvaluateName}} 已锁定</a>
+      {{/if}}
+      {{else}}
+      <a class="td-href report-look">查看</a>
+      {{/if}}
+
+    </td>
+  </tr>
+  {{/each}}
+</script>
+%}}
+
+<!--分页器模板-->
+{{%
+<script type="text/x-template" id="J_report_pagination_template">
+  <ul class="pagination">
+    <li class="pagination-left"><a href="#" class="pagination-left-href">&laquo;</a></li>
+    {{#each(paginationList)}}
+    <li class="pagination-item {{#if(this===currentPage)}}active{{/if}}"><a href="#" class="pagination-item-href">{{this}}</a>
+    </li>
+    {{/each}}
+    <li class="pagination-right"><a href="#" class="pagination-right-href">&raquo;</a></li>
+  </ul>
+</script>
+%}}
+
+<!--报告已被质量评估-刷新页面-弹窗模板-->
+<div class="have-review-refresh-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_have_review_refresh_template">
+  <div class="modal fade" id="J_have_review_refresh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4>该报告已完成评价</h4>
+        </div>
+        <div class="modal-body">
+          当前报告已完成质量评估，不能重复评估，请刷新页面！
+        </div>
+        <div class="modal-footer refresh-modal-footer">
+          <button type="button" class="btn btn-primary blue-button refresh-ok-button" data-isdeleteall="{{isDeleteAll}}"
+                  data-accidentid="{{accidentId}}" data-observeid="{{observeId}}">刷新页面
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+<!--报告已被他人锁定-刷新页面-弹窗模板-->
+<div class="have-lock-refresh-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_have_lock_refresh_template">
+  <div class="modal fade" id="J_have_lock_refresh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4>该报告已经被他人锁定</h4>
+        </div>
+        <div class="modal-body">
+          当前报告已经被他人锁定，请刷新页面！
+        </div>
+        <div class="modal-footer lock-refresh-modal-footer">
+          <button type="button" class="btn btn-primary blue-button lock-refresh-ok-button"
+                  data-isdeleteall="{{isDeleteAll}}"
+                  data-accidentid="{{accidentId}}" data-observeid="{{observeId}}">刷新页面
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+<!--锁定某条报告-弹窗模板-->
+<div class="lock-one-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_lock_one_template">
+  <div class="modal fade" id="J_lock_one_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4>请确认操作</h4>
+        </div>
+        <div class="modal-body">
+          您一旦进入质量评估，当前报告就会被锁定，其他人将没有权限进行该报告的评估！
+          <br>
+          <br>
+          您确定锁定该报告并进入评估吗？
+        </div>
+        <div class="modal-footer lock-modal-footer">
+          <button type="button" class="btn btn-primary blue-button lock-ok-button" data-isdeleteall="{{isDeleteAll}}"
+                  data-accidentid="{{accidentId}}" data-observeid="{{observeId}}">确&emsp;&emsp;定
+          </button>
+          <button type="button" class="btn btn-default org-button" data-dismiss="modal">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/qualityReportList.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/qualityReportList.css"/>
+{{/block}}
+

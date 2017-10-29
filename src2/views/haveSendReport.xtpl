@@ -1,0 +1,193 @@
+{{extend('./layout')}}
+{{#block('content')}}
+<div class="body-implement">
+  <div class="page-title">已上报的报告</div>
+
+  <!--导航-->
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active nav-li-1" data-status="全部状态"><a class="nav-a-1" href="#">全&emsp;&emsp;部</a>
+    </li>
+    <li role="presentation" class="nav-li-2" data-status="退回"><a class="nav-a-2" href="#">被退回的</a></li>
+    <li role="presentation" class="nav-li-3" data-status="待评价"><a class="nav-a-3" href="#">未被评价的</a></li>
+    <li role="presentation" class="nav-li-4" data-status="已评价"><a class="nav-a-4" href="#">已被评价的</a></li>
+  </ul>
+
+  <div class="query-condition-container">
+    <form class="form-horizontal form-container">
+
+      <div class="form-group form-item">
+        <div class="col-md-4">
+          <label class="label-title control-label col-md-3">报告编号:</label>
+          <div class="input-content col-md-9">
+            <input type="text" class="form-control" id="J_reportId" placeholder="请输入报告编号">
+          </div>
+        </div>
+        <div class="data-select-container col-md-8">
+          <label class="label-title control-label col-md-2">报告日期:</label>
+          <div class="input-content col-md-10">
+            <input class="date-input " id="J_begin_date" placeholder="年/月/日"> &emsp;至&emsp;
+            <input class="date-input " id="J_end_date" placeholder="年/月/日">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-item">
+        <div class="col-md-4">
+          <label class="label-title control-label col-md-3">器械类别:</label>
+          <div class="input-content col-md-9">
+            <select class="form-control equipment-category-select">
+              <option value="数字减影血管造影机">数字减影血管造影机</option>
+              <option value="纳米银抗菌凝胶">纳米银抗菌凝胶</option>
+              <option value="XXXXXXXXXXX机1">XXXXXXXXXXX机</option>
+              <option value="XXXXXXXXXXX机2">XXXXXXXXXXX机</option>
+              <option value="XXXXXXXXXXX机3">XXXXXXXXXXX机</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="accident-select-container col-md-8">
+          <label class="label-title control-label col-md-2">不良事件:</label>
+          <div class="input-content col-md-10">
+            <label class="radio-inline">
+              <input type="radio" name="hasAccident" value="ALL" checked> 全部
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="hasAccident" value="Y"> 是
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="hasAccident" value="N"> 否
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-item">
+        <div class="col-md-4">
+          <label class="label-title control-label col-md-3">患者姓名:</label>
+          <div class="input-content col-md-9">
+            <input type="text" class="form-control" id="J_patient" placeholder="输入患者姓名">
+          </div>
+        </div>
+        <div class="search-button-operate col-md-8">
+          <label class="label-title control-label col-md-2"></label>
+          <div class="input-content col-md-10">
+            <button class="btn blue-button submit-button">查&emsp;&emsp;询</button>
+            <button class="btn org-button reset-button">重&emsp;&emsp;置</button>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+  <table class="table table-bordered report-container">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>报告日期</th>
+      <th>报告人</th>
+      <th>患者姓名</th>
+      <th>器械类别</th>
+      <th>不良事件</th>
+      <th>评价状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody class="report-tbody">
+
+    </tbody>
+  </table>
+
+  <div class="pagination-container">
+
+  </div>
+</div>
+
+
+<!--列表模板-->
+{{%
+<script type="text/x-template" id="J_report_tr_template">
+  {{#each(reportList)}}
+  <tr class="temp-report-tr" data-observeid="{{id}}" data-accidentid="{{accidentId}}"
+      data-hasaccident="{{hasAccident}}">
+    <td>{{id}}</td>
+    <td>{{formatDate(gmtUpdated)}}</td>
+    <td>{{reportorName}}</td>
+    <td>{{patientName}}</td>
+    <td>{{equipmentCategory}}</td>
+    <td>{{chineseYN(hasAccident)}}</td>
+    <td>{{status}}</td>
+    <td>
+      {{#if(status==='已评价')}}
+      <a class="td-href report-look">查看</a>
+      {{else}}
+      <a class="td-href report-look">查看</a>
+      <a class="td-href report-fill">修改</a>
+      <a class="td-href report-delete">删除</a>
+      {{/if}}
+
+    </td>
+  </tr>
+  {{/each}}
+</script>
+%}}
+
+<!--分页器模板-->
+{{%
+<script type="text/x-template" id="J_report_pagination_template">
+  <ul class="pagination">
+    <li class="pagination-left"><a href="#" class="pagination-left-href">&laquo;</a></li>
+    {{#each(paginationList)}}
+    <li class="pagination-item {{#if(this===currentPage)}}active{{/if}}"><a href="#" class="pagination-item-href">{{this}}</a>
+    </li>
+    {{/each}}
+    <li class="pagination-right"><a href="#" class="pagination-right-href">&raquo;</a></li>
+  </ul>
+</script>
+%}}
+
+
+<!--删除指定的某条报告-弹窗模板-->
+<div class="delete-one-modal-container"></div>
+{{%
+<script type="text/x-template" id="J_delete_one_template">
+  <div class="modal fade" id="J_delete_one_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog success-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header success-modal-title">
+          <button type="button" class="close success-modal-close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4>请确认操作</h4>
+        </div>
+        <div class="modal-body">
+          {{#if(isDeleteAll)}}
+          删除后不可找回，是否确定删除全部报告！
+          {{else}}
+          删除后不可找回，是否确定删除该报告！
+          {{/if}}
+        </div>
+        <div class="modal-footer success-modal-footer">
+          <button type="button" class="btn btn-primary blue-button delete-ok-button" data-isdeleteall="{{isDeleteAll}}"
+                  data-accidentid="{{accidentId}}" data-observeid="{{observeId}}">确&emsp;&emsp;定
+          </button>
+          <button type="button" class="btn btn-default org-button" data-dismiss="modal">取&emsp;&emsp;消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+%}}
+
+{{/block}}
+
+{{{#block('scriptLink')}}}
+<script src="/haveSendReport.js"></script>
+{{{/block}}}
+
+{{#block('styleLink')}}
+<link rel="stylesheet" type="text/css" href="/css/haveSendReport.css"/>
+{{/block}}
+

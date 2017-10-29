@@ -1,0 +1,169 @@
+.select2 {
+  width: 350px !important;
+}
+
+label.radio-inline {
+  margin-right: 30px;
+}
+
+.query-condition-container {
+  padding-top: 16px;
+  background-color: #fafafa;
+  padding-bottom: 14px;
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+
+.form-group.form-item.org-name-select {
+  margin-top: 16px !important;
+}
+
+.search-button-operate {
+  padding-left: 70px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #333 !important;
+}
+
+a.td-href.account-look, a.td-href.account-modify {
+  margin-right: 15px;
+}
+
+.pagination-container {
+  float: right;
+  margin-top: -20px;
+}
+
+.modal-success-title {
+  font-size: 16px;
+  color: #0d9a53;
+  font-weight: 900;
+  margin-left: 40px;
+  margin-bottom: 15px;
+  margin-top: 7px;
+}
+
+.modal-info {
+  margin-left: 91px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.modal-info-item {
+  margin-bottom: 18px;
+}
+
+.modal-account {
+  background-color: #cdeab5;
+  width: 324px;
+  margin-left: 51px;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-dialog.success-modal-dialog {
+  width: 450px !important;
+}
+
+.modal-account-item {
+  margin-bottom: 15px;
+}
+
+.modal-header.success-modal-title {
+  background-color: #133b8c;
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 56px;
+  padding-top: 20px;
+  padding-left: 39px;
+}
+
+button.close.success-modal-close {
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-shadow: none !important;
+  filter: alpha(opacity=20);
+  opacity: 1;
+}
+
+.modal-extra {
+  margin-left: 92px;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 12px;
+}
+
+.modal-extra-item {
+  color: #999999;
+  margin-bottom: 5px;
+}
+
+button.btn.btn-primary.register-success-button {
+  font-size: 13px !important;
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.modal-footer.success-modal-footer {
+  text-align: center;
+  border-top: none;
+  padding-bottom: 27px;
+}
+
+.personal-look-data, .account-look-data {
+  border: 1px solid #dcdcdc;
+  padding-bottom: 12px;
+  border-radius: 4px;
+}
+
+.personal-look-title, .account-look-title {
+  background-color: #e2e2e2;
+  font-size: 13px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+.personal-look-item, .account-look-item {
+  font-size: 13px;
+  font-weight: normal;
+  margin-left: 16px;
+  margin-top: 12px;
+}
+
+.account-look-data {
+  margin-top: 17px;
+}
+
+button.btn.btn-primary.ok-button {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.modal-dialog.success-modal-dialog {
+  width: 600px !important;
+}
+
+.form-modify-modal {
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.form-control {
+  font-size: 12px !important;
+}
