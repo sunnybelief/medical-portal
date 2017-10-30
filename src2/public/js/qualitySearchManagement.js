@@ -351,7 +351,7 @@ $(document).ready(function () {
           });
 
 
-          //为删除按钮绑定点击事件
+          //为删除按钮绑定点击事件:注意删除某个质量评估方案之后，这个评估方案之前的抽样样本表的质量评估状态应该重新置为未评估
           $('.scheme-delete-href').on('click', function () {
             let id = $(this).parent().parent().data('id');
             let html = deleteModalTemplate.render({});
